@@ -1,12 +1,14 @@
 import { useLoaderData } from "@remix-run/react";
 import supabase from "utils/supabase";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
-export const loader = async () => {
+// eslint-disable-next-line no-empty-pattern
+export const loader = async ({}: LoaderFunctionArgs) => {
   const { data } = await supabase.from("messages").select();
-  return { data };
+  return { messages: data ?? [] };
 };
 
 export default function Index() {
-  const { data } = useLoaderData();
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  const { messages } = useLoaderData<typeof loader>();
+  return <pre>{JSON.stringify(messages, null, 2)}</pre>;
 }
