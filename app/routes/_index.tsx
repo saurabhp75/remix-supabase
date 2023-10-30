@@ -1,6 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
-import supabase from "utils/supabase";
+import supabase from "utils/supabase.server";
 import type { LoaderFunctionArgs } from "@remix-run/node";
+import Login from "components/login";
 
 // eslint-disable-next-line no-empty-pattern
 export const loader = async ({}: LoaderFunctionArgs) => {
@@ -10,5 +11,10 @@ export const loader = async ({}: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { messages } = useLoaderData<typeof loader>();
-  return <pre>{JSON.stringify(messages, null, 2)}</pre>;
+  return (
+    <>
+      <Login />
+      <pre>{JSON.stringify(messages, null, 2)}</pre>
+    </>
+  );
 }
